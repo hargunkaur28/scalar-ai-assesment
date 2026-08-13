@@ -1,1 +1,1 @@
-build=no-vercel-json
+build=roottest
