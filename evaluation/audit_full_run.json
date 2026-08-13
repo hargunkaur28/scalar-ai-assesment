@@ -1,0 +1,15 @@
+{
+  "blocks_processed": 4027,
+  "entities_redacted": 576,
+  "counts_by_type": {
+    "ORGANISATION": 176,
+    "CIN": 9,
+    "ADDRESS": 44,
+    "PERSON": 205,
+    "EMAIL": 52,
+    "PHONE": 36,
+    "WEBSITE": 54
+  },
+  "metadata_fields_scrubbed": [],
+  "ner_active": false
+}

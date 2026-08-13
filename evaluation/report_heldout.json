@@ -1,0 +1,164 @@
+{
+  "blocks_evaluated": 22,
+  "strict": {
+    "per_type": {
+      "ADDRESS": {
+        "support": 2,
+        "tp": 0,
+        "fp": 1,
+        "fn": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "EMAIL": {
+        "support": 10,
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ORGANISATION": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PERSON": {
+        "support": 11,
+        "tp": 11,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PHONE": {
+        "support": 6,
+        "tp": 5,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.8333,
+        "recall": 0.8333,
+        "f1": 0.8333
+      },
+      "WEBSITE": {
+        "support": 4,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "micro": {
+      "precision": 0.9412,
+      "recall": 0.9143,
+      "f1": 0.9275,
+      "tp": 32,
+      "fp": 2,
+      "fn": 3
+    },
+    "macro": {
+      "precision": 0.8056,
+      "recall": 0.8056,
+      "f1": 0.8056
+    }
+  },
+  "relaxed": {
+    "per_type": {
+      "ADDRESS": {
+        "support": 2,
+        "tp": 1,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6667
+      },
+      "EMAIL": {
+        "support": 10,
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ORGANISATION": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PERSON": {
+        "support": 11,
+        "tp": 11,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PHONE": {
+        "support": 6,
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "WEBSITE": {
+        "support": 4,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "micro": {
+      "precision": 1.0,
+      "recall": 0.9714,
+      "f1": 0.9855,
+      "tp": 34,
+      "fp": 0,
+      "fn": 1
+    },
+    "macro": {
+      "precision": 1.0,
+      "recall": 0.9167,
+      "f1": 0.9444
+    }
+  },
+  "by_stratum_relaxed": {
+    "heldout": {
+      "precision": 1.0,
+      "recall": 0.9714,
+      "f1": 0.9855,
+      "support": 35
+    }
+  },
+  "token_accuracy": 0.9848,
+  "errors": {
+    "false_positives": [],
+    "false_negatives": [
+      {
+        "label": "ADDRESS",
+        "text": "Gat No. 11/3, 11/4, 11/5, Village Birdewadi"
+      }
+    ]
+  },
+  "ner_active": false
+}

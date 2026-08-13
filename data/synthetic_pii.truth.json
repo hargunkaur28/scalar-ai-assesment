@@ -1,0 +1,181 @@
+{
+  "_comment": "Auto-generated. Regenerate with make_synthetic.py.",
+  "source_document": "synthetic_pii.docx",
+  "blocks": [
+    {
+      "text": "Employee record: Priya Raghunathan, SSN 452-11-8873, date of birth 14/03/1982.",
+      "entities": [
+        [
+          "PERSON",
+          "Priya Raghunathan"
+        ],
+        [
+          "SSN",
+          "452-11-8873"
+        ],
+        [
+          "DATE_OF_BIRTH",
+          "14/03/1982"
+        ]
+      ]
+    },
+    {
+      "text": "Payment received from card 4539 1488 0343 6467 issued to Marcus Whitfield.",
+      "entities": [
+        [
+          "CREDIT_CARD",
+          "4539 1488 0343 6467"
+        ],
+        [
+          "PERSON",
+          "Marcus Whitfield"
+        ]
+      ]
+    },
+    {
+      "text": "Card on file: 5500-0000-0000-0004. Backup card: 3400 0000 0000 009.",
+      "entities": [
+        [
+          "CREDIT_CARD",
+          "5500-0000-0000-0004"
+        ],
+        [
+          "CREDIT_CARD",
+          "3400 0000 0000 009"
+        ]
+      ]
+    },
+    {
+      "text": "The request originated from 203.0.113.42 and was relayed via 10.0.0.255.",
+      "entities": [
+        [
+          "IP_ADDRESS",
+          "203.0.113.42"
+        ],
+        [
+          "IP_ADDRESS",
+          "10.0.0.255"
+        ]
+      ]
+    },
+    {
+      "text": "IPv6 endpoint 2001:0db8:85a3:0000:0000:8a2e:0370:7334 logged the session.",
+      "entities": [
+        [
+          "IP_ADDRESS",
+          "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+        ]
+      ]
+    },
+    {
+      "text": "Applicant Dr. Rohan Dey (DOB: 02 August 1979) can be reached at rohan.dey@example-mail.com or +91 98765 43210.",
+      "entities": [
+        [
+          "PERSON",
+          "Rohan Dey"
+        ],
+        [
+          "DATE_OF_BIRTH",
+          "02 August 1979"
+        ],
+        [
+          "EMAIL",
+          "rohan.dey@example-mail.com"
+        ],
+        [
+          "PHONE",
+          "+91 98765 43210"
+        ]
+      ]
+    },
+    {
+      "text": "Beneficiary: Ms. Anita Krishnan, born on March 7, 1990, SSN 078-05-1120.",
+      "entities": [
+        [
+          "PERSON",
+          "Anita Krishnan"
+        ],
+        [
+          "DATE_OF_BIRTH",
+          "March 7, 1990"
+        ],
+        [
+          "SSN",
+          "078-05-1120"
+        ]
+      ]
+    },
+    {
+      "text": "Correspondence address: 48 Riverbend Road, Whitefield, Bengaluru - 560 066, Karnataka, India.",
+      "entities": [
+        [
+          "ADDRESS",
+          "48 Riverbend Road, Whitefield, Bengaluru - 560 066, Karnataka, India"
+        ]
+      ]
+    },
+    {
+      "text": "Vendor of record is Northwind Components Private Limited, represented by Sanjay Iyer.",
+      "entities": [
+        [
+          "ORGANISATION",
+          "Northwind Components Private Limited"
+        ],
+        [
+          "PERSON",
+          "Sanjay Iyer"
+        ]
+      ]
+    },
+    {
+      "text": "PAN AABCK1234M and Aadhaar 2340 1234 5678 were submitted with the form.",
+      "entities": [
+        [
+          "PAN",
+          "AABCK1234M"
+        ],
+        [
+          "AADHAAR",
+          "2340 1234 5678"
+        ]
+      ]
+    },
+    {
+      "text": "Order 4532-1122-3344-5566 shipped on 12/01/2024; see invoice 998-12-3456.",
+      "entities": []
+    },
+    {
+      "text": "Version 10.0.0.1 of the firmware supersedes build 999.999.999.999.",
+      "entities": []
+    },
+    {
+      "text": "SSN 000-45-6789 and 666-45-6789 are structurally invalid identifiers.",
+      "entities": []
+    },
+    {
+      "text": "The board met on December 10, 2025 and page 124 records the resolution.",
+      "entities": []
+    },
+    {
+      "text": "Ticket 4111111111111111 was raised against the Companies Act, 2013 by SEBI.",
+      "entities": [
+        [
+          "CREDIT_CARD",
+          "4111111111111111"
+        ]
+      ]
+    },
+    {
+      "text": "Reserve Bank of India and the National Stock Exchange of India Limited published the circular on Working Day 3.",
+      "entities": []
+    },
+    {
+      "text": "Total revenue was 4,200.00 million against 10,00,000 Equity Shares of face value 5 each.",
+      "entities": []
+    },
+    {
+      "text": "Refer to the Escrow Collection Bank and the Public Offer Account Bank as defined above.",
+      "entities": []
+    }
+  ]
+}

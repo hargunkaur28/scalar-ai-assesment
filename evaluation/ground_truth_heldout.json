@@ -1,0 +1,41 @@
+{
+  "_comment": [
+    "HELD-OUT evaluation set for Red_Herring_Prospectus.docx.",
+    "",
+    "Drawn with a fixed seed AFTER tuning against ground_truth.json was frozen,",
+    "and annotated without inspecting the model's predictions on it. The",
+    "development set (ground_truth.json) scores 1.000 across the board, which is",
+    "exactly what overfitting looks like -- gazetteers and stopword lists were",
+    "iterated against it. These held-out numbers are the ones to trust.",
+    "",
+    "Same scope policy as the development set: regulators, exchanges,",
+    "depositories and statutes are not organisations; role labels are not",
+    "person names; corporate websites are redacted."
+  ],
+  "source_document": "Red_Herring_Prospectus.docx",
+  "annotated_by": "manual review, post-freeze",
+  "blocks": [
+    {"index": 71,   "stratum": "heldout", "entities": []},
+    {"index": 150,  "stratum": "heldout", "entities": [["EMAIL", "customercare@icicisecurities.com"]]},
+    {"index": 209,  "stratum": "heldout", "entities": []},
+    {"index": 236,  "stratum": "heldout", "entities": []},
+    {"index": 249,  "stratum": "heldout", "entities": [["ORGANISATION", "CARE Analytics and Advisory Private Limited"]]},
+    {"index": 257,  "stratum": "heldout", "entities": [["PERSON", "Rajesh Kushal Hegde"]]},
+    {"index": 648,  "stratum": "heldout", "entities": []},
+    {"index": 1269, "stratum": "heldout", "entities": []},
+    {"index": 1270, "stratum": "heldout", "entities": []},
+    {"index": 1546, "stratum": "heldout", "entities": []},
+    {"index": 1881, "stratum": "heldout", "entities": []},
+    {"index": 1882, "stratum": "heldout", "entities": []},
+    {"index": 2804, "stratum": "heldout", "entities": [["PERSON", "Rajesh Kushal Hegde"], ["ORGANISATION", "Shubhkamal Leasing and Investment Private Limited"]]},
+    {"index": 3431, "stratum": "heldout", "entities": [["PERSON", "Kushal Subbayya Hegde"], ["PERSON", "Pushpa Kushal Hegde"], ["PERSON", "Rajesh Kushal Hegde"], ["PERSON", "Rohit Kushal Hegde"], ["PERSON", "Rakhi Girija Shetty"]]},
+    {"index": 3683, "stratum": "heldout", "entities": [["PERSON", "Sarthak Malvadkar"], ["ADDRESS", "Gat No. 11/3, 11/4, 11/5, Village Birdewadi"]]},
+    {"index": 3819, "stratum": "heldout", "entities": [["ADDRESS", "163, 5th Floor, H.T.Parekh Marg Backbay Reclamation Churchgate, Mumbai \u2013 400020"], ["PHONE", "022-68052182"], ["EMAIL", "Ipocmg@icicibank.com"], ["WEBSITE", "www.icicibank.com"], ["PERSON", "Varun Badai"]]},
+    {"index": 3826, "stratum": "heldout", "entities": [["EMAIL", "siddharth.jadhav@hdfcbank.com"], ["EMAIL", "sachin.gawade@hdfcbank.com"], ["EMAIL", "eric.bacha@hdfcbank.com"], ["EMAIL", "tushar.gavankar@hdfcbank.com"], ["EMAIL", "pravin.teli2@hdfcbank.com"], ["WEBSITE", "www.hdfcbank.com"]]},
+    {"index": 3839, "stratum": "heldout", "entities": [["PHONE", "+91 22 30752929"], ["PHONE", "+91 22 30752928"], ["PHONE", "+91 22 30752914"]]},
+    {"index": 3862, "stratum": "heldout", "entities": []},
+    {"index": 3881, "stratum": "heldout", "entities": [["EMAIL", "parag.pansare@kirtanepandit.com"]]},
+    {"index": 3909, "stratum": "heldout", "entities": [["PHONE", "+91-20-26234000"], ["PERSON", "Sharmila Joshi"], ["WEBSITE", "www.indusind.com/"], ["EMAIL", "sharmila.joshi@indusind.com"]]},
+    {"index": 3913, "stratum": "heldout", "entities": [["PHONE", "+ 91 8879770456"], ["PERSON", "Cherag Gyara"], ["WEBSITE", "www.icicibank.com"], ["EMAIL", "cherag.gyara@icicibank.com"]]}
+  ]
+}

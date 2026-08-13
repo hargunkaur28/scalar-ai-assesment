@@ -1,0 +1,31 @@
+# Render.com blueprint. Deploy with: New > Blueprint > point at this repo.
+#
+# Render hosts the Streamlit UI (app.py). Streamlit holds a WebSocket open per
+# session, which needs a long-lived process -- so this, not Vercel, is the
+# deployment that runs the full interactive app. See DEPLOY.md.
+services:
+  - type: web
+    name: pii-redaction-tool
+    runtime: python
+    plan: free
+    region: oregon
+    autoDeploy: true
+
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements-app.txt
+      # The spaCy model is omitted on the free plan (512 MB RAM). The app
+      # detects this and runs the deterministic recognizers, which is the same
+      # configuration the evaluation numbers were produced under.
+
+    # --server.address 0.0.0.0 is required: Render routes to the container's
+    # external interface, and Streamlit binds to localhost by default.
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+
+    # Streamlit's own liveness endpoint. Without this Render probes / , which
+    # returns the app shell before the server is actually ready.
+    healthCheckPath: /_stcore/health
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"

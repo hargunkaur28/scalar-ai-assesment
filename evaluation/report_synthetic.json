@@ -1,0 +1,267 @@
+{
+  "blocks_evaluated": 18,
+  "strict": {
+    "per_type": {
+      "AADHAAR": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ADDRESS": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "CREDIT_CARD": {
+        "support": 4,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "DATE_OF_BIRTH": {
+        "support": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "EMAIL": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "IP_ADDRESS": {
+        "support": 3,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571
+      },
+      "ORGANISATION": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PAN": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PERSON": {
+        "support": 5,
+        "tp": 1,
+        "fp": 1,
+        "fn": 4,
+        "precision": 0.5,
+        "recall": 0.2,
+        "f1": 0.2857
+      },
+      "PHONE": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "SSN": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "micro": {
+      "precision": 0.9048,
+      "recall": 0.8261,
+      "f1": 0.8636,
+      "tp": 19,
+      "fp": 2,
+      "fn": 4
+    },
+    "macro": {
+      "precision": 0.9318,
+      "recall": 0.9273,
+      "f1": 0.9221
+    }
+  },
+  "relaxed": {
+    "per_type": {
+      "AADHAAR": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ADDRESS": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "CREDIT_CARD": {
+        "support": 4,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "DATE_OF_BIRTH": {
+        "support": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "EMAIL": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "IP_ADDRESS": {
+        "support": 3,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571
+      },
+      "ORGANISATION": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PAN": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "PERSON": {
+        "support": 5,
+        "tp": 2,
+        "fp": 0,
+        "fn": 3,
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714
+      },
+      "PHONE": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "SSN": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "micro": {
+      "precision": 0.9524,
+      "recall": 0.8696,
+      "f1": 0.9091,
+      "tp": 20,
+      "fp": 1,
+      "fn": 3
+    },
+    "macro": {
+      "precision": 0.9773,
+      "recall": 0.9455,
+      "f1": 0.9481
+    }
+  },
+  "by_stratum_relaxed": {
+    "all": {
+      "precision": 0.9524,
+      "recall": 0.8696,
+      "f1": 0.9091,
+      "support": 23
+    }
+  },
+  "token_accuracy": 0.9615,
+  "errors": {
+    "false_positives": [
+      {
+        "label": "IP_ADDRESS",
+        "text": "10.0.0.1"
+      }
+    ],
+    "false_negatives": [
+      {
+        "label": "PERSON",
+        "text": "Priya Raghunathan"
+      },
+      {
+        "label": "PERSON",
+        "text": "Marcus Whitfield"
+      },
+      {
+        "label": "PERSON",
+        "text": "Sanjay Iyer"
+      }
+    ]
+  },
+  "ner_active": false
+}

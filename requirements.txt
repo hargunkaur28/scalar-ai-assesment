@@ -1,0 +1,7 @@
+# Core runtime -- everything the redactor and the CLI need. This is also the
+# only file the Vercel deployment installs, so keep it minimal.
+python-docx==1.2.0
+
+# The extras live in sibling files so a deployment can pick what it needs:
+#   requirements-app.txt   core + Streamlit  (the web UI, app.py -- used by Render)
+#   requirements-ner.txt   core + spaCy and Faker (the optional NER layer)

@@ -1,0 +1,13 @@
+# Optional layers. The tool detects the absence of both and degrades
+# gracefully to the deterministic recognizers, which is the configuration the
+# published evaluation numbers were produced under -- so nothing here is
+# required to reproduce them.
+-r requirements.txt
+
+# Statistical NER supplement. After installing, fetch a model:
+#   python -m spacy download en_core_web_lg    (best quality, ~590 MB)
+#   python -m spacy download en_core_web_sm    (fits a 512 MB instance, ~12 MB)
+spacy>=3.7,<4 ; python_version < "3.13"
+
+# Widens the surrogate name/address pools. Built-in pools are used without it.
+Faker>=30.0

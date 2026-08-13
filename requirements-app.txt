@@ -1,0 +1,5 @@
+# Core + the Streamlit web UI (app.py). This is what the Render deployment
+# installs. Streamlit is not needed by the CLI or the evaluation harness.
+-r requirements.txt
+
+streamlit>=1.40,<2

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "public",
+  "functions": {
+    "api/redact.py": {
+      "maxDuration": 300,
+      "excludeFiles": "{tests/**,evaluation/**,data/**,public/**,**/*.md,**/__pycache__/**}"
+    }
+  }
+}

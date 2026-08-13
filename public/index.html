@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PII Redaction Tool</title>
+<meta name="description" content="Detect PII in a Word document and replace it with consistent fake values.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f7f8fa;
+    --border: #e2e5ea;
+    --text: #1a1d23;
+    --muted: #616a76;
+    --accent: #2f6fed;
+    --accent-text: #ffffff;
+    --danger: #b3261e;
+    --danger-bg: #fdf0ef;
+    --warn-bg: #fff8e6;
+    --warn-border: #e8d9a8;
+    --bar: #c3d3f8;
+    --radius: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171c;
+      --panel: #1b1f26;
+      --border: #2c323b;
+      --text: #e6e9ee;
+      --muted: #9aa4b2;
+      --accent: #4d84f5;
+      --accent-text: #0b0e12;
+      --danger: #f2857c;
+      --danger-bg: #2a1a19;
+      --warn-bg: #2a2417;
+      --warn-border: #4a4127;
+      --bar: #2f4470;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem 1.25rem 4rem;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 940px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 0 0 .4rem; letter-spacing: -.01em; }
+  h2 { font-size: 1rem; margin: 0 0 .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  p.lede { margin: 0 0 1.75rem; color: var(--muted); max-width: 68ch; }
+  section {
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  label { display: block; font-weight: 500; margin-bottom: .3rem; }
+  .hint { color: var(--muted); font-size: .85rem; font-weight: 400; }
+
+  #drop {
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    background: var(--bg);
+    transition: border-color .15s, background .15s;
+  }
+  #drop:hover, #drop.over { border-color: var(--accent); background: var(--panel); }
+  #drop strong { display: block; margin-bottom: .25rem; }
+  #file { display: none; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .4rem .9rem; }
+  .grid label { font-weight: 400; margin: 0; display: flex; align-items: center; gap: .45rem; }
+  .row { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-end; margin-top: 1.1rem; }
+  .row > div { flex: 1 1 220px; }
+  input[type=text] {
+    width: 100%; padding: .5rem .6rem; font: inherit;
+    color: var(--text); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 6px;
+  }
+  .checks { display: flex; flex-direction: column; gap: .4rem; }
+  .checks label { font-weight: 400; display: flex; align-items: center; gap: .45rem; margin: 0; }
+
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    padding: .6rem 1.15rem; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text);
+  }
+  button.primary { background: var(--accent); color: var(--accent-text); border-color: transparent; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  .actions { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin-top: 1.4rem; }
+  .linkish { background: none; border: none; color: var(--accent); padding: 0; font-weight: 400; text-decoration: underline; }
+
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { text-align: left; padding: .4rem .6rem; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; width: 5rem; }
+  .barcell { width: 45%; }
+  .bar { height: 9px; border-radius: 4px; background: var(--bar); min-width: 2px; }
+
+  .banner { border-radius: 6px; padding: .7rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
+  .banner.error { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+  .banner.warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+  .hidden { display: none !important; }
+  details { margin-top: 1.25rem; }
+  summary { cursor: pointer; font-weight: 500; }
+  .scroll { max-height: 340px; overflow: auto; margin-top: .75rem; border: 1px solid var(--border); border-radius: 6px; }
+  footer { color: var(--muted); font-size: .85rem; margin-top: 2rem; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>PII Redaction Tool</h1>
+  <p class="lede">
+    Upload a <code>.docx</code>. Personally identifiable information is replaced with
+    consistent fake values &mdash; the same real name becomes the same fake name
+    everywhere in the document, so the result stays readable and internally coherent.
+  </p>
+
+  <section>
+    <h2>Document</h2>
+    <div id="drop" tabindex="0" role="button" aria-label="Choose a .docx file">
+      <strong id="dropTitle">Drop a .docx here, or click to choose</strong>
+      <span class="hint" id="dropHint">Maximum 3&nbsp;MB on this deployment</span>
+    </div>
+    <input type="file" id="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+  </section>
+
+  <section>
+    <h2>PII types to redact</h2>
+    <div class="grid" id="types"></div>
+    <div class="row">
+      <div>
+        <label for="salt">Surrogate salt
+          <span class="hint">&mdash; changes the mapping, keeps it consistent</span>
+        </label>
+        <input type="text" id="salt" value="pii-redactor-v1" spellcheck="false">
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" id="metadata" checked> Scrub document metadata</label>
+        <label><input type="checkbox" id="mapping" checked> Return surrogate mapping</label>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="run" disabled>Redact document</button>
+      <button class="linkish" id="selectAll" type="button">select all</button>
+      <button class="linkish" id="selectNone" type="button">select none</button>
+      <span class="hint" id="status"></span>
+    </div>
+  </section>
+
+  <div id="error" class="banner error hidden"></div>
+
+  <section id="results" class="hidden">
+    <h2>Result</h2>
+    <p id="summary"></p>
+    <div class="actions" style="margin-top:0">
+      <button class="primary" id="dlDocx">Download redacted .docx</button>
+      <button id="dlAudit">Download audit log (.json)</button>
+    </div>
+    <div id="countsWrap" style="margin-top:1.4rem">
+      <table id="counts"><thead><tr><th>Type</th><th class="num">Count</th><th class="barcell"></th></tr></thead><tbody></tbody></table>
+    </div>
+    <p class="hint" id="meta" style="margin-top:1rem"></p>
+
+    <details id="mappingBox">
+      <summary>Surrogate mapping &mdash; sensitive, this re-identifies the document</summary>
+      <div class="banner warn" style="margin-top:.75rem">
+        This table maps real values back to their replacements. Storing it alongside
+        the redacted file undoes the redaction.
+      </div>
+      <div class="scroll">
+        <table id="mappingTable"><thead><tr><th>Type</th><th>Original</th><th>Replacement</th></tr></thead><tbody></tbody></table>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    Scope: regulators, exchanges and statutes (SEBI, BSE, RBI, Companies Act) are
+    deliberately <strong>not</strong> redacted &mdash; see the README for the full policy.
+    This deployment runs the deterministic recognizers only; the optional spaCy NER
+    layer is not installed. Uploads are processed in memory and never stored.
+  </footer>
+</main>
+
+<script>
+"use strict";
+
+// Fallback list, replaced by GET /api/redact on load so the page cannot drift
+// from the PIIType enum in redactor/entities.py.
+const FALLBACK_TYPES = [
+  "PERSON", "EMAIL", "PHONE", "ORGANISATION", "ADDRESS", "SSN", "CREDIT_CARD",
+  "DATE_OF_BIRTH", "IP_ADDRESS", "PAN", "AADHAAR", "DIN", "CIN", "BANK_ACCOUNT", "WEBSITE"
+];
+
+const $ = (id) => document.getElementById(id);
+const drop = $("drop"), fileInput = $("file"), runBtn = $("run");
+const errorBox = $("error"), results = $("results"), statusEl = $("status");
+
+let selectedFile = null;
+let maxUpload = 3 * 1024 * 1024;
+let lastResult = null;
+
+function humanSize(bytes) {
+  return bytes < 1024 * 1024
+    ? (bytes / 1024).toFixed(0) + " KB"
+    : (bytes / (1024 * 1024)).toFixed(2) + " MB";
+}
+
+function renderTypes(types) {
+  $("types").innerHTML = types.map((t) => `
+    <label><input type="checkbox" class="pii" value="${t}" checked> ${t.replace(/_/g, " ")}</label>
+  `).join("");
+}
+
+function showError(message) {
+  errorBox.textContent = message;
+  errorBox.classList.remove("hidden");
+}
+
+function clearError() {
+  errorBox.classList.add("hidden");
+}
+
+function setFile(file) {
+  clearError();
+  results.classList.add("hidden");
+  if (!file) return;
+  if (!file.name.toLowerCase().endsWith(".docx")) {
+    showError("Only .docx files are supported. A .doc or .pdf will not work.");
+    selectedFile = null;
+    runBtn.disabled = true;
+    return;
+  }
+  if (file.size > maxUpload) {
+    showError(
+      `${file.name} is ${humanSize(file.size)}. This deployment is limited to ` +
+      `${humanSize(maxUpload)} because a Vercel Function caps its request and ` +
+      `response bodies at 4.5 MB. Use the Streamlit deployment on Render for larger files.`
+    );
+    selectedFile = null;
+    runBtn.disabled = true;
+    return;
+  }
+  selectedFile = file;
+  $("dropTitle").textContent = file.name;
+  $("dropHint").textContent = humanSize(file.size) + " — click to choose a different file";
+  runBtn.disabled = false;
+}
+
+drop.addEventListener("click", () => fileInput.click());
+drop.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileInput.click(); }
+});
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", (e) => {
+  e.preventDefault();
+  drop.classList.remove("over");
+  setFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener("change", () => setFile(fileInput.files[0]));
+
+$("selectAll").addEventListener("click", () =>
+  document.querySelectorAll(".pii").forEach((c) => (c.checked = true)));
+$("selectNone").addEventListener("click", () =>
+  document.querySelectorAll(".pii").forEach((c) => (c.checked = false)));
+
+function base64ToBlob(b64, mime) {
+  const binary = atob(b64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new Blob([bytes], { type: mime });
+}
+
+function download(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function render(data, file, elapsedMs) {
+  lastResult = { data, file };
+
+  $("summary").textContent =
+    `Redacted ${data.entities_redacted} entities across ${data.blocks_processed} ` +
+    `text blocks in ${(elapsedMs / 1000).toFixed(1)}s.`;
+
+  const counts = Object.entries(data.counts_by_type || {}).sort((a, b) => b[1] - a[1]);
+  const max = counts.length ? counts[0][1] : 1;
+  $("counts").querySelector("tbody").innerHTML = counts.length
+    ? counts.map(([type, n]) => `
+        <tr>
+          <td>${type}</td>
+          <td class="num">${n}</td>
+          <td class="barcell"><div class="bar" style="width:${(n / max) * 100}%"></div></td>
+        </tr>`).join("")
+    : `<tr><td colspan="3">No PII detected.</td></tr>`;
+
+  const scrubbed = (data.metadata_fields_scrubbed || []).join(", ") || "none";
+  $("meta").textContent =
+    `NER layer active: ${data.ner_active} · metadata fields scrubbed: ${scrubbed}`;
+
+  const entries = [];
+  for (const [type, pairs] of Object.entries(data.mapping || {})) {
+    for (const [original, replacement] of Object.entries(pairs)) {
+      entries.push([type, original, replacement]);
+    }
+  }
+  entries.sort((a, b) => a[0].localeCompare(b[0]) || a[1].localeCompare(b[1]));
+  if (entries.length) {
+    $("mappingBox").classList.remove("hidden");
+    $("mappingTable").querySelector("tbody").innerHTML = entries
+      .map(([t, o, r]) => `<tr><td>${t}</td><td>${escapeHtml(o)}</td><td>${escapeHtml(r)}</td></tr>`)
+      .join("");
+  } else {
+    $("mappingBox").classList.add("hidden");
+  }
+
+  results.classList.remove("hidden");
+  results.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+runBtn.addEventListener("click", async () => {
+  if (!selectedFile) return;
+  const types = [...document.querySelectorAll(".pii:checked")].map((c) => c.value);
+  if (!types.length) { showError("Select at least one PII type."); return; }
+
+  clearError();
+  results.classList.add("hidden");
+  runBtn.disabled = true;
+  statusEl.textContent = "Harvesting entities and redacting…";
+  const started = performance.now();
+
+  const query = new URLSearchParams({
+    types: types.join(","),
+    salt: $("salt").value || "pii-redactor-v1",
+    metadata: $("metadata").checked ? "1" : "0",
+    mapping: $("mapping").checked ? "1" : "0"
+  });
+
+  try {
+    const response = await fetch(`/api/redact?${query}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/octet-stream" },
+      body: selectedFile
+    });
+
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error(
+        response.status === 413
+          ? "The file exceeded the platform's 4.5 MB body limit before reaching the function."
+          : `Server returned ${response.status} with a non-JSON body.`
+      );
+    }
+    if (!response.ok || !data.ok) throw new Error(data.error || `Request failed (${response.status}).`);
+
+    render(data, selectedFile, performance.now() - started);
+    if (data.mapping_omitted) showError(data.mapping_omitted);
+  } catch (err) {
+    showError(err.message || String(err));
+  } finally {
+    runBtn.disabled = false;
+    statusEl.textContent = "";
+  }
+});
+
+$("dlDocx").addEventListener("click", () => {
+  if (!lastResult) return;
+  const stem = lastResult.file.name.replace(/\.docx$/i, "");
+  download(
+    base64ToBlob(
+      lastResult.data.docx_base64,
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ),
+    `${stem}_REDACTED.docx`
+  );
+});
+
+$("dlAudit").addEventListener("click", () => {
+  if (!lastResult) return;
+  const { docx_base64, mapping, ...audit } = lastResult.data;
+  download(new Blob([JSON.stringify(audit, null, 2)], { type: "application/json" }), "audit.json");
+});
+
+// Populate the type list and the real upload ceiling from the API.
+renderTypes(FALLBACK_TYPES);
+fetch("/api/redact")
+  .then((r) => (r.ok ? r.json() : null))
+  .then((info) => {
+    if (!info || !info.ok) return;
+    if (Array.isArray(info.types) && info.types.length) renderTypes(info.types);
+    if (info.max_upload_bytes) {
+      maxUpload = info.max_upload_bytes;
+      if (!selectedFile) $("dropHint").textContent = `Maximum ${humanSize(maxUpload)} on this deployment`;
+    }
+  })
+  .catch(() => { /* the fallback list is already rendered */ });
+</script>
+</body>
+</html>

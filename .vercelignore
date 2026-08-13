@@ -1,0 +1,28 @@
+# Files Vercel must not receive.
+#
+# The first entry is the load-bearing one: Vercel's Python runtime treats a
+# root-level app.py as the application entrypoint, and app.py here is the
+# Streamlit UI, which cannot run on a serverless function at all. Keeping it
+# out of the upload means Vercel resolves the file-based function in api/
+# instead. app.py is the Render deployment's entrypoint and is unaffected.
+app.py
+.streamlit/
+cli.py
+
+# Only requirements.txt (python-docx) is needed to run the function. The
+# Streamlit and spaCy extras would add ~250 MB to the bundle for no benefit.
+requirements-app.txt
+requirements-ner.txt
+render.yaml
+
+# Not reachable from the function.
+evaluation/
+tests/
+data/
+*.md
+.gitignore
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/

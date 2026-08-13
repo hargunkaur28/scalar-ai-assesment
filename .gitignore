@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.DS_Store
+.streamlit/secrets.toml
+
+# Never commit a surrogate mapping: it re-identifies redacted documents.
+mapping.json
+*.mapping.json
