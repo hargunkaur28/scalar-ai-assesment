@@ -91,9 +91,22 @@ designed, not a fault — but do not open the link cold in front of an audience.
 ## 3. Vercel — the upload page and function
 
 1. [vercel.com/new](https://vercel.com/new) → import the same repository
-2. Framework preset: **Other**. Leave build and output settings alone —
-   [`vercel.json`](vercel.json) sets `outputDirectory` to `public`.
+2. Framework preset: **Other**. Leave **Root Directory** and **Output
+   Directory** *empty* — see the warning below, this is the one setting that
+   silently breaks the deployment.
 3. **Deploy**. Takes under a minute; only `python-docx` is installed.
+
+> **Root Directory must be empty.** It tells Vercel where your code lives, and
+> the code lives at the repository root — that is where `api/`, `redactor/`,
+> `requirements.txt` and `vercel.json` are. Setting it to `public` (the folder
+> holding only the HTML page) makes Vercel resolve *everything* relative to
+> `public/`, so `api/redact.py` and `vercel.json` fall outside the project and
+> are never seen. The failure mode is deceptive: the site deploys successfully,
+> `/` serves the page correctly, and only `/api/redact` 404s — with Vercel's
+> static 404, which looks identical to a routing mistake in the function.
+> Editing `vercel.json` to investigate does nothing, because that file is
+> outside the root too. Vercel finds `public/` on its own; leave both fields
+> blank.
 
 Three pieces of configuration are load-bearing:
 
@@ -114,6 +127,16 @@ Three pieces of configuration are load-bearing:
   its maximum. *If the build rejects the value*, Fluid compute is off for the
   project: turn it on in **Settings → Functions**, or lower the value to `60`,
   which is the legacy Hobby ceiling and still ample.
+
+Two smaller traps, both of which fail the build loudly rather than silently:
+
+- **One route per name.** `api/ping.js` and `api/ping.py` both map to
+  `/api/ping`, and Vercel rejects the deployment with *"conflicting paths or
+  names"*. Extensions do not disambiguate a route.
+- **`maxDuration: 300`** in `vercel.json` needs Fluid compute, which is on by
+  default for new projects. If the build rejects the value, enable it under
+  **Settings → Functions**, or drop it to `60` — still ample against the ~17s
+  measured on a full prospectus.
 
 ### Checking it works
 
