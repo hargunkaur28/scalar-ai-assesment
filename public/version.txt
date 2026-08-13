@@ -1,1 +1,1 @@
-build=71ce3c0
+build=no-vercel-json
